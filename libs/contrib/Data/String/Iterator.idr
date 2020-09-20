@@ -7,11 +7,13 @@ data StringIterator : Type where [external]
 
 %foreign
   "scheme:blodwen-string-iterator-new"
+  "javascript:stringIterator:new"
 export
 fromString : String -> StringIterator
 
 %foreign
   "scheme:blodwen-string-iterator-next"
+  "javascript:stringIterator:next"
 export
 uncons : StringIterator -> Maybe (Char, StringIterator)
 
