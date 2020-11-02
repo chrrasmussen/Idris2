@@ -96,9 +96,6 @@ mutual
       = do p' <- schExp racketPrim racketString 0 p
            c' <- schExp racketPrim racketString 0 c
            pure $ mkWorld $ "(blodwen-register-object " ++ p' ++ " " ++ c' ++ ")"
-  racketPrim i MakeFuture [_, work]
-      = do work' <- schExp racketPrim racketString 0 work
-           pure $ mkWorld $ "(blodwen-future " ++ work' ++ ")"
   racketPrim i prim args
       = schExtCommon racketPrim racketString i prim args
 
