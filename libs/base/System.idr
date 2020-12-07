@@ -15,13 +15,20 @@ prim__sleep : Int -> PrimIO ()
 %foreign support "idris2_usleep"
 prim__usleep : Int -> PrimIO ()
 
+||| Sleep the current thread for the specified number of seconds.
 export
-sleep : HasIO io => Int -> io ()
-sleep sec = primIO (prim__sleep sec)
+sleep : HasIO io => (secs : Int) -> So (secs >= 0) => io ()
+sleep secs = primIO (prim__sleep secs)
 
+||| Sleep the current thread for the specified number of microseconds.
+|||
+||| On Windows, the precision of the sleep function is limited to milliseconds.
+||| Thus, `usleep 1500` is equivalent to `usleep 1000`.
+||| See the `win32_sleep()` function in `support/c/windows/win_utils.c`, and
+||| https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-sleep
 export
-usleep : HasIO io => (x : Int) -> So (x >= 0) => io ()
-usleep sec = primIO (prim__usleep sec)
+usleep : HasIO io => (us : Int) -> So (us >= 0) => io ()
+usleep us = primIO (prim__usleep us)
 
 -- This one is going to vary for different back ends. Probably needs a
 -- better convention. Will revisit...
