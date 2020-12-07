@@ -21,7 +21,7 @@ futureHelloWorld (us, n) with (choose (us >= 0))
 partial
 testSimpleIO : IO (List Unit)
 testSimpleIO = do
-  futures <- sequence $ futureHelloWorld <$> [(30000, "World"), (10000, "Bar"), (0, "Foo"), (20000, "Idris")]
+  futures <- sequence $ futureHelloWorld <$> [(300000, "World"), (100000, "Bar"), (0, "Foo"), (200000, "Idris")]
   let awaited = await <$> futures
   pure awaited
 
@@ -33,16 +33,16 @@ testErasureAndNonbindTest = do
   _ <- forkIO $ do
     putStrLn "This line is printed"
   notUsed <- forkIO $ do
-    usleep 10000
+    usleep 100000
     putStrLn "This line is also printed"
   let _ = nonbind
   let n = nonbind
-  usleep 20000 -- Even if not explicitly awaited, we should let threads finish before exiting
+  usleep 200000 -- Even if not explicitly awaited, we should let threads finish before exiting
 
 testMap : IO ()
 testMap = do
   future1 <- forkIO $ do
-    usleep 10000
+    usleep 100000
     putStrLn "#2"
   let future3 = map (const "#3") future1
   future2 <- forkIO $ do
