@@ -155,9 +155,6 @@
   (mutex-unlock! m c t)
   (mutex-lock! m))
 
-(define blodwen-sleep thread-sleep!)
-(define (blodwen-usleep s) (thread-sleep! (/ s 1e6)))
-
 (define (blodwen-time)
   (exact-floor (time->seconds (current-time))))
 

@@ -211,9 +211,6 @@
 (define (blodwen-condition-signal c)
   (channel-put c 'ready))
 
-(define (blodwen-sleep s) (sleep s))
-(define (blodwen-usleep us) (sleep (* 0.000001 us)))
-
 (define (blodwen-time) (current-seconds))
 
 (define (blodwen-clock-time-utc) (current-time 'time-utc))
