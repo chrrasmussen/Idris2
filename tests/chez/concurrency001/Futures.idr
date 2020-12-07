@@ -6,8 +6,8 @@ import System
 import System.Future
 import System.Info
 
-constant : IO ()
-constant = do
+testConstant : IO ()
+testConstant = do
   let a = await $ fork "String"
   putStrLn a
 
@@ -19,8 +19,8 @@ futureHelloWorld (us, n) with (choose (us >= 0))
     putStrLn $ "Hello " ++ n ++ "!"
 
 partial
-simpleIO : IO (List Unit)
-simpleIO = do
+testSimpleIO : IO (List Unit)
+testSimpleIO = do
   futures <- sequence $ futureHelloWorld <$> [(30000, "World"), (10000, "Bar"), (0, "Foo"), (20000, "Idris")]
   let awaited = await <$> futures
   pure awaited
@@ -28,8 +28,8 @@ simpleIO = do
 nonbind : IO (Future ())
 nonbind = forkIO $ putStrLn "This shouldn't print"
 
-erasureAndNonbindTest : IO ()
-erasureAndNonbindTest = do
+testErasureAndNonbindTest : IO ()
+testErasureAndNonbindTest = do
   _ <- forkIO $ do
     putStrLn "This line is printed"
   notUsed <- forkIO $ do
@@ -39,8 +39,8 @@ erasureAndNonbindTest = do
   let n = nonbind
   usleep 20000 -- Even if not explicitly awaited, we should let threads finish before exiting
 
-map : IO ()
-map = do
+testMap : IO ()
+testMap = do
   future1 <- forkIO $ do
     usleep 10000
     putStrLn "#2"
@@ -49,3 +49,15 @@ map = do
     putStrLn "#1"
   pure $ await future2
   putStrLn (await future3)
+
+partial
+main : IO ()
+main = do
+  putStrLn "testConstant"
+  testConstant
+  putStrLn "testSimpleIO"
+  testSimpleIO
+  putStrLn "testErasureAndNonbindTest"
+  testErasureAndNonbindTest
+  putStrLn "testMap"
+  testMap

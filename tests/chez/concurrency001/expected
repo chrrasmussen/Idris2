@@ -1,10 +1,14 @@
+testConstant
 String
+testSimpleIO
 Hello Foo!
 Hello Bar!
 Hello Idris!
 Hello World!
+testErasureAndNonbindTest
 This line is printed
 This line is also printed
+testMap
 #1
 #2
 #3
