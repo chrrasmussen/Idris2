@@ -29,10 +29,12 @@ IDRIS2_LIB_IPKG := idris2api.ipkg
 ifeq ($(OS), windows)
 	# This produces D:/../.. style paths
 	IDRIS2_PREFIX := $(shell cygpath -m ${PREFIX})
+	IDRIS2_RUNTIME_PREFIX := $(shell cygpath -m ${RUNTIME_PREFIX})
 	IDRIS2_CURDIR := $(shell cygpath -m ${CURDIR})
 	SEP := ;
 else
 	IDRIS2_PREFIX := ${PREFIX}
+	IDRIS2_RUNTIME_PREFIX := ${RUNTIME_PREFIX}
 	IDRIS2_CURDIR := ${CURDIR}
 	SEP := :
 endif
@@ -61,7 +63,7 @@ src/IdrisPaths.idr: FORCE
 	echo '-- @generated' > src/IdrisPaths.idr
 	echo 'module IdrisPaths' >> src/IdrisPaths.idr
 	echo 'export idrisVersion : ((Nat,Nat,Nat), String); idrisVersion = ((${MAJOR},${MINOR},${PATCH}), "${GIT_SHA1}")' >> src/IdrisPaths.idr
-	echo 'export yprefix : String; yprefix="${IDRIS2_PREFIX}"' >> src/IdrisPaths.idr
+	echo 'export yprefix : String; yprefix="${IDRIS2_RUNTIME_PREFIX}"' >> src/IdrisPaths.idr
 
 FORCE:
 
